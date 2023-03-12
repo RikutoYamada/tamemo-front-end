@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 import * as React from 'react';
 
-
+// TODO: パスの指定方法がうまくいかない修正必要あり（とりあえず一時凌ぎ状態)
+import { Spinner } from '../Spinner';
 
 const variants = {
   primary: 'bg-teal-500 hover:bg-teal-700 text-white',
