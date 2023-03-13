@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import Button from '@/components/elements/Button/Button'
+import { Button } from '@/components/elements/Button'
 import Card from '@/components/elements/Card/Card'
 
 const Home = () => {
