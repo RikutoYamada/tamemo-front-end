@@ -1,8 +1,9 @@
 import applyCaseMiddleware from "axios-case-converter"
-import Axios from "axios"
+import Axios, { AxiosInstance } from "axios"
 
 import { API_URL } from "@/config"
 
-export const axios = applyCaseMiddleware(Axios.create({
-baseURL: API_URL
+export const axios: AxiosInstance = applyCaseMiddleware(Axios.create({
+baseURL: API_URL,
+withCredentials: true
 }), {ignoreHeaders: true})
