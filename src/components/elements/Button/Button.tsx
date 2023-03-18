@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import * as React from 'react';
+import React, { ReactNode } from 'react';
 
 // TODO: パスの指定方法がうまくいかない修正必要あり（とりあえず一時凌ぎ状態)
 import { Spinner } from '../Spinner';
@@ -25,40 +25,40 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: keyof typeof variants;
   size?: keyof typeof sizes;
   isLoading?: boolean;
+  refInProps?: React.RefObject<HTMLButtonElement>;
+  children: React.ReactNode;
+  onClick: ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | (() => void)
 } & IconProps;
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      type = 'button',
-      className = '',
-      variant = 'primary',
-      size = 'md',
-      isLoading = false,
-      startIcon,
-      endIcon,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <button
-        ref={ref}
-        type={type}
-        className={clsx(
-          'flex justify-center items-center border border-gray-300 disabled:opacity-70 disabled:cursor-not-allowed rounded-md shadow-sm font-medium focus:outline-none hover:opacity-80',
-          variants[variant],
-          sizes[size],
-          className
-        )}
-        {...props}
-      >
-        {isLoading && <Spinner size="sm" className="text-current" />}
-        {!isLoading && startIcon}
-        <span className="mx-2">{props.children}</span> {!isLoading && endIcon}
-      </button>
-    );
-  }
-);
-
-Button.displayName = 'Button';
+export const Button = (
+  {
+    type = 'button',
+    className = '',
+    variant = 'primary',
+    size = 'md',
+    isLoading = false,
+    startIcon,
+    endIcon,
+    refInProps,
+    onClick,
+    children
+  }: ButtonProps
+) => {
+  return (
+    <button
+      ref={refInProps}
+      type={type}
+      onClick={onClick}
+      className={clsx(
+        'flex justify-center items-center border border-gray-300 disabled:opacity-70 disabled:cursor-not-allowed rounded-md shadow-sm font-medium focus:outline-none hover:opacity-80',
+        variants[variant],
+        sizes[size],
+        className
+      )}
+    >
+      {isLoading && <Spinner size="sm" className="text-current" />}
+      {!isLoading && startIcon}
+      <span className="mx-2">{children}</span> {!isLoading && endIcon}
+    </button>
+  );
+}
