@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 // TODO: パスの指定方法がうまくいかない修正必要あり（とりあえず一時凌ぎ状態)
 import { Spinner } from '../Spinner';
@@ -21,13 +21,11 @@ type IconProps =
   | { endIcon: React.ReactElement; startIcon?: never }
   | { endIcon?: undefined; startIcon?: undefined };
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = React.ComponentPropsWithRef<'button'> & {
   variant?: keyof typeof variants;
   size?: keyof typeof sizes;
   isLoading?: boolean;
-  refInProps?: React.RefObject<HTMLButtonElement>;
   children: React.ReactNode;
-  onClick: ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | (() => void)
 } & IconProps;
 
 export const Button = (
@@ -39,14 +37,12 @@ export const Button = (
     isLoading = false,
     startIcon,
     endIcon,
-    refInProps,
     onClick,
     children
   }: ButtonProps
 ) => {
   return (
     <button
-      ref={refInProps}
       type={type}
       onClick={onClick}
       className={clsx(
