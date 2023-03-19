@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-type TextFieldProps = React.ComponentProps<'input'> & {
+type TextFieldProps = React.ComponentPropsWithRef<'input'> & {
   label?: string
 }
 export const TextField = (
