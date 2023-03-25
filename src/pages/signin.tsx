@@ -2,41 +2,21 @@ import { Button } from '@/components/elements/Button'
 import Card from '@/components/elements/Card/Card'
 import { TextField } from '@/components/elements/TextField/TextField'
 import { useState } from 'react'
-import { axios } from '@/lib/axios'
+import { useLogin } from '@/features/auth/hooks/useLogin'
+import { LoginCredentials } from '@/features/auth/api/login'
 
-export type SignInParams = {
-  email: string
-  password: string
-}
-
-const signIn = (params: SignInParams) => {
-  return axios.post('/sign_in', params)
-}
 const SignIn = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault()
-    const params: SignInParams = {
-      email,
-      password
-    }
-    console.log(email)
-    try {
-      const res = await signIn(params)
-      console.log(res)
-
-      if (res.status === 201) {
-        console.log('signed in')
-
-      } else {
-        console.log('status failed')
-      }
-    } catch (error) {
-      console.log('failed')
-    }
+  const params: LoginCredentials = {
+    email,
+    password
   }
+
+  const { error, isLoading, mutate } = useLogin()
+
+
   return (
     <div className='flex justify-center mt-36'>
       <Card>
@@ -45,17 +25,17 @@ const SignIn = () => {
         </div>
         <TextField
           className='mb-4'
-          type={'email'}
-          placeholder={'example@email.com'}
+          type='email'
+          placeholder='example@email.com'
           onChange={e => setEmail(e.target.value)}
-          label={'メール'} />
-        <TextField 
-          type={'password'}
-          placeholder={'password'}
+          label='メール' />
+        <TextField
+          type='password'
+          placeholder='password'
           onChange={e => setPassword(e.target.value)}
-          label={'パスワード'} />
+          label='パスワード' />
         <div className='flex justify-end mt-10'>
-          <Button type='submit' onClick={handleSubmit}>ログイン</Button>
+          <Button type='submit' onClick={() => { mutate(params) }} isLoading={isLoading}>ログイン</Button>
         </div>
       </Card>
     </div>
