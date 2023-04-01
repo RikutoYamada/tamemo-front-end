@@ -1,8 +1,9 @@
-import Link from 'next/link'
-
-import { Button } from '@/components/elements/Button'
 import Card from '@/components/elements/Card/Card'
 import { useSyncExternalStore } from 'react'
+import { axios } from "@/lib/axios";
+import { useQuery } from 'react-query';
+import { useRouter } from 'next/router'
+
 
 const subscribe = (callback) => {
   window.addEventListener('storage', callback)
@@ -10,27 +11,35 @@ const subscribe = (callback) => {
   return () => {
     window.removeEventListener('storage', callback)
   }
-} 
+}
+
+const fetchUsers = async () => {
+  const res = await axios.get('/users')
+  return res
+}
 const Home = () => {
+  const router = useRouter()
+  const { isLoading, isError, data } = useQuery(['repoData'],
+    () => axios.get('/users'), {
+    retry: 0,
+    onError: () => {
+      router.push('/signin')
+    }
+  })
   const snapShot = useSyncExternalStore(
     subscribe,
     () => localStorage.getItem('isAuthenticated'),
     () => ''
   )
-  
-  console.log(snapShot)
   return (
     <div className='flex justify-center mt-36'>
       <Card>
-        <div className='flex justify-center'>
-          <h1>ログインしていません</h1>
-        </div>
-        <div className='flex justify-end mt-10'>
-          <Link href='/signin' passHref>
-            <Button>ログイン</Button>
-            {snapShot && <h1>ログインしています</h1>}
-          </Link>
-        </div>
+        {!isLoading && !isError && data.data.map((user) => (
+          <div key={user.id}>
+            <h1>{user.name}</h1>
+            <h1>{user.email}</h1>
+          </div>
+        ))}
       </Card>
     </div>
   )
