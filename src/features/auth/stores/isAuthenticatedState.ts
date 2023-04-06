@@ -1,6 +1,7 @@
 import { atom } from 'recoil'
 
-export const isAuthenticatedState = atom({
-  key: 'isAuthenticated',
-  default: false,
+type authenticationStatus = 'authenticated' | 'notAuthenticated' | 'loading'
+export const authenticationState = atom<authenticationStatus>({
+  key: 'authenticationStatus',
+  default: 'notAuthenticated'
 })
