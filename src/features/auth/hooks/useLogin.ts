@@ -1,18 +1,13 @@
 import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
 import { login } from '@/features/auth/api/login'
-import { setCookie } from 'nookies'
+import cookies from '@/utils/cookies'
 
 export const useLogin = () => {
   const router = useRouter()
   return useMutation(login, {
     onSuccess: (res) => {
-      console.log('onSuccess')
-      console.log(res.data.id)
-      setCookie(null, 'user_id', res.data.id, {
-        maxAge: 30 * 24 * 60 * 60,
-        path: '/',
-      })
+      cookies.set({name: 'current_user_id', value: res.data.id})
       router.push('/')
     },
     onError: () => {
