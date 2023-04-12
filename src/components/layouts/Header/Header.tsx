@@ -7,7 +7,6 @@ export const Header = ({
   currentUserId
 }: HeaderProps
 ) => {
-console.log(currentUserId)
   return (
     <header>
       <nav className='flex bg-teal-500 p-6 justify-between'>
