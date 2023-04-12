@@ -4,8 +4,17 @@ import { TextField } from '@/components/elements/TextField/TextField'
 import { useState } from 'react'
 import { useLogin } from '@/features/auth/hooks/useLogin'
 import { LoginCredentials } from '@/features/auth/api/login'
+import { parseCookies, setCookie} from 'nookies'
+import { GetServerSideProps } from "next";
+import nookies from 'nookies'
 
-const SignIn = () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = nookies.get(context)
+  return {
+    props: { layout: cookies.user_id ? true : false}
+  };
+}
+const SignIn = (props) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
@@ -14,7 +23,10 @@ const SignIn = () => {
     password
   }
 
-  const { error, isLoading, mutate } = useLogin()
+  const { data, error, isLoading, mutate } = useLogin()
+
+  const cookies = parseCookies()
+  // console.log(cookies)
 
 
   return (

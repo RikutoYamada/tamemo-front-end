@@ -10,7 +10,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <Header />
+        <Header currentUserId={pageProps.currentUserId} />
         <Component {...pageProps} />
       </QueryClientProvider>
     </RecoilRoot>
