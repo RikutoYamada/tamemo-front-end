@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: { layout: cookies.user_id ? true : false}
   };
 }
-const SignIn = (props) => {
+const login = (props) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
@@ -54,4 +54,4 @@ const SignIn = (props) => {
   )
 }
 
-export default SignIn
+export default login

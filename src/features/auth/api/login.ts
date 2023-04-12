@@ -6,5 +6,5 @@ export type LoginCredentials = {
 }
 
 export const login = (data:LoginCredentials) => {
-  return axios.post('/sign_in', data)
+  return axios.post('/login', data)
 }
