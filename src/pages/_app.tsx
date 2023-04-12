@@ -3,16 +3,14 @@ import { Header } from '@/components/layouts/Header'
 import { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RecoilRoot } from 'recoil'
-import { useQuery } from 'react-query';
 
 const queryClient = new QueryClient()
 
 const App = ({ Component, pageProps }: AppProps) => {
-  console.log('a')
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <Header isAuthenticated={pageProps.layout}/>
+        <Header currentUserId={pageProps.currentUserId} />
         <Component {...pageProps} />
       </QueryClientProvider>
     </RecoilRoot>
