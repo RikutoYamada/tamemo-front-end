@@ -6,12 +6,18 @@ const sizes = {
   lg: 'w-4/5'
 }
 
-const Card = (
+export type CardProps = {
+  className?: string
+  size?: keyof typeof sizes;
+  children: React.ReactNode;
+}
+
+export const Card = (
   {
     className = '',
     size = 'sm',
     children
-  }
+  }: CardProps
 ) => {
   return (
     <div className={clsx('p-6 bg-white border border-gray-200 rounded-lg shadow', sizes[size], className)}>
@@ -20,5 +26,3 @@ const Card = (
 
   )
 }
-
-export default Card
