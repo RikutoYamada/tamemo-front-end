@@ -1,4 +1,4 @@
-import Card from '@/components/elements/Card/Card'
+import { Card } from '@/components/elements/Card'
 import cookies from "@/utils/cookies"
 import { NextPageContext } from 'next';
 

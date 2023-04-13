@@ -1,5 +1,5 @@
 import { Button } from '@/components/elements/Button'
-import Card from '@/components/elements/Card/Card'
+import { Card } from '@/components/elements/Card'
 import { TextField } from '@/components/elements/TextField/TextField'
 import { useState } from 'react'
 import { useLogin } from '@/features/auth/hooks/useLogin'
