@@ -4,17 +4,28 @@ import { TextField } from '@/components/elements/TextField/TextField'
 import { useState } from 'react'
 import { useLogin } from '@/features/auth/hooks/useLogin'
 import { LoginCredentials } from '@/features/auth/api/login'
-import { parseCookies, setCookie} from 'nookies'
-import { GetServerSideProps } from "next";
-import nookies from 'nookies'
+import cookies from "@/utils/cookies"
+import { NextPageContext } from 'next'
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = nookies.get(context)
+export async function getServerSideProps(ctx: NextPageContext) {
+  const currentUserId = cookies.get(ctx).current_user_id
+  if (currentUserId) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
   return {
-    props: { layout: cookies.user_id ? true : false}
+    props: { currentUserId: currentUserId || null }
   };
 }
-const login = (props) => {
+
+type loginPageProps = {
+  currentUserId: string
+}
+const login = (props: loginPageProps) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
@@ -24,10 +35,6 @@ const login = (props) => {
   }
 
   const { data, error, isLoading, mutate } = useLogin()
-
-  const cookies = parseCookies()
-  // console.log(cookies)
-
 
   return (
     <div className='flex justify-center mt-36'>
