@@ -7,7 +7,7 @@ export const useLogin = () => {
   const router = useRouter()
   return useMutation(login, {
     onSuccess: (res) => {
-      cookies.set({name: 'current_user_id', value: res.data.id})
+      cookies.set({ name: 'current_user_id', value: res.data.id })
       router.push('/')
     },
     onError: () => {
