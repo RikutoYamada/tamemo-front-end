@@ -7,7 +7,6 @@ export const useLogout = () => {
   const router = useRouter()
   return useMutation(logout, {
     onSuccess: () => {
-      console.log('onSuccess')
       cookies.destroy({name: 'current_user_id'})
       router.push('/')
     }
