@@ -26,7 +26,7 @@ export const Header = ({
         {!currentUserId &&
           <div className='flex w-36 justify-between'>
             <Link href='/login' className='text-teal-100 hover:text-white'>ログイン</Link>
-            <Link href='/login' className='text-teal-100 hover:text-white'>新規登録</Link>
+            <Link href='/register' className='text-teal-100 hover:text-white'>新規登録</Link>
           </div>
         }
       </nav>
