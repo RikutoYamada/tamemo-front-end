@@ -14,7 +14,7 @@ export const Header = ({
   return (
     <header>
       <nav className='bg-teal-500 px-20'>
-        <div className='flex py-6 justify-between items-center'>
+        <div className='flex pt-2 pb-6 justify-between items-center'>
           <Link href='/' passHref>
             <div className='flex items-center'>
               <Image alt='tamemo_top_page' src='tamemo.svg' width={35} height={35} />
@@ -32,8 +32,8 @@ export const Header = ({
           }
         </div>
         <div className='flex justify-between w-2/3'>
-          <Link href='#' className='text-teal-100 hover:text-white text-lg'>ホーム</Link>
-          <Link href='#' className='text-teal-100 hover:text-white text-lg'>履歴</Link>
+          <Link href='/' className='text-teal-100 hover:text-white text-lg'>ホーム</Link>
+          <Link href='/history' className='text-teal-100 hover:text-white text-lg'>履歴</Link>
           <Link href='#' className='text-teal-100 hover:text-white text-lg'>予算</Link>
           <Link href='#' className='text-teal-100 hover:text-white text-lg'>資産</Link>
           <Link href='#' className='text-teal-100 hover:text-white text-lg'>レポート</Link>
