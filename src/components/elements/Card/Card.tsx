@@ -8,8 +8,8 @@ const sizes = {
 
 export type CardProps = {
   className?: string
-  size?: keyof typeof sizes;
-  children: React.ReactNode;
+  size?: keyof typeof sizes
+  children: React.ReactNode
 }
 
 export const Card = (
