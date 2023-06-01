@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useExpenses } from "@/features/history/hooks/useExpenses";
+import { useGetExpenses } from "@/features/expenses/hooks/useGetExpenses";
 import { Card } from "@/components/elements/Card";
 
 type Expense = {
@@ -12,7 +12,7 @@ type Expense = {
 }
 
 export const RecentHistory = () => {
-  const { data } = useExpenses()
+  const { data } = useGetExpenses()
   return (
     <Card size="md" className="mx-auto mt-8">
       <h1 className="font-bold">最近の履歴</h1>
