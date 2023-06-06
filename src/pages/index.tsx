@@ -13,8 +13,8 @@ export async function getServerSideProps(ctx: NextPageContext) {
 const Home = () => {
   return (
     <>
-      <RecentHistory />
       <EasyExpenseRegistration />
+      <RecentHistory />
     </>
   )
 }
