@@ -5,6 +5,8 @@ import { Expense } from '../../api/createExpense'
 import { useState } from 'react'
 import { TextField } from '@/components/elements/TextField/TextField'
 import { Listbox } from '@headlessui/react'
+import { ChevronUpDownIcon } from '@heroicons/react/24/solid'
+
 
 const mainExpenseCategories = [
   { id: 1, name: '食費' },
@@ -33,10 +35,11 @@ export const EasyExpenseRegistration = () => {
     <Card size="md" className="mx-auto mt-8">
       <Listbox value={mainExpenseCategory} onChange={setMainExpenseCategory}>
         <Listbox.Button className='cursor-pointer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'>
-          <div>
+          <div className='flex justify-between'>
             <div className='text-left'>
               {mainExpenseCategory.name}
             </div>
+            <ChevronUpDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
           </div>
         </Listbox.Button>
         <Listbox.Options className='cursor-pointer shadow appearance-none border rounded'>
