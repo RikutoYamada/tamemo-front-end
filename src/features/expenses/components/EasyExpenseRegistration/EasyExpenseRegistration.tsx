@@ -6,6 +6,8 @@ import { useState } from 'react'
 import { TextField } from '@/components/elements/TextField/TextField'
 import { Listbox } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/solid'
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 
 const mainExpenseCategories = [
@@ -14,6 +16,7 @@ const mainExpenseCategories = [
 ]
 
 export const EasyExpenseRegistration = () => {
+  const [date, setDate] = useState(new Date())
   const [amount, setAmount] = useState<number>(0)
   const [store, setStore] = useState<string>('')
   const expendedAt = '2023-06-01'
@@ -33,6 +36,7 @@ export const EasyExpenseRegistration = () => {
 
   return (
     <Card size="md" className="mx-auto mt-8">
+    <DatePicker dateFormat='yyyy/MM/dd' selected={date} onChange={selectedDate => {setDate(selectedDate || date)}}/>
       <Listbox value={mainExpenseCategory} onChange={setMainExpenseCategory}>
         <Listbox.Button className='cursor-pointer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'>
           <div className='flex justify-between'>
