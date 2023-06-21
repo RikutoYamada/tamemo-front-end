@@ -25,6 +25,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
 type loginPageProps = {
   currentUserId: string
 }
+
 const login = (props: loginPageProps) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
