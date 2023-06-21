@@ -1,4 +1,4 @@
-import { Button } from '@/components/elements/Button'
+import { Button } from '@mui/material';
 import { Card } from '@/components/elements/Card'
 import { useCreateExpense } from '../../hooks/useCreateExpense'
 import { Expense } from '../../api/createExpense'
@@ -6,8 +6,10 @@ import { useState } from 'react'
 import { TextField } from '@/components/elements/TextField/TextField'
 import { Listbox } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/solid'
-import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
+import { DatePicker } from '@/components/elements/DatePicker'
+import { useGetSubExpenseCategories } from '../../hooks/useGetSubExpenseCategories'
+import ja from 'date-fns/locale/ja'
+
 
 
 const mainExpenseCategories = [
@@ -16,27 +18,29 @@ const mainExpenseCategories = [
 ]
 
 export const EasyExpenseRegistration = () => {
-  const [date, setDate] = useState(new Date())
+  const [expendedAt, setExpendedAt] = useState(new Date())
   const [amount, setAmount] = useState<number>(0)
   const [store, setStore] = useState<string>('')
-  const expendedAt = '2023-06-01'
-  const subExpenseCategoryId = 3
 
-  const [mainExpenseCategory, setMainExpenseCategory] = useState(mainExpenseCategories[0])
-  console.log(mainExpenseCategory.id)
+  const [mainExpenseCategory, setMainExpenseCategory] = useState({ id: 1, name: '食費' })
+
+
+  const { mutate } = useCreateExpense()
+  const { data: subExpenseCategories, isLoading } = useGetSubExpenseCategories(mainExpenseCategory.id)
+  const [subExpenseCategory, setSubExpenseCategory] = useState({ id: 1, name: '食料品'})
 
   const expense: Expense = {
-    subExpenseCategoryId,
+    subExpenseCategoryId: subExpenseCategory.id,
     amount,
     store,
-    expendedAt
+    expendedAt: expendedAt.toISOString().slice(0, 10)
   }
-
-  const { data, error, isLoading, mutate } = useCreateExpense()
 
   return (
     <Card size="md" className="mx-auto mt-8">
-    <DatePicker dateFormat='yyyy/MM/dd' selected={date} onChange={selectedDate => {setDate(selectedDate || date)}}/>
+
+      <Button color="secondary" variant="contained">Hello World</Button>
+      <DatePicker selected={expendedAt} onChange={(selectedDate: Date) => { setExpendedAt(selectedDate || expendedAt) }} />
       <Listbox value={mainExpenseCategory} onChange={setMainExpenseCategory}>
         <Listbox.Button className='cursor-pointer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'>
           <div className='flex justify-between'>
@@ -57,6 +61,30 @@ export const EasyExpenseRegistration = () => {
               value={mainExpenseCategory}
             >
               {mainExpenseCategory.name}
+            </Listbox.Option>
+          ))}
+        </Listbox.Options>
+      </Listbox>
+      <Listbox value={subExpenseCategory} onChange={setSubExpenseCategory}>
+        <Listbox.Button className='cursor-pointer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'>
+          <div className='flex justify-between'>
+            <div className='text-left'>
+              {subExpenseCategory.name}
+            </div>
+            <ChevronUpDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
+          </div>
+        </Listbox.Button>
+        <Listbox.Options className='cursor-pointer shadow appearance-none border rounded'>
+          {subExpenseCategories?.data.map((subExpenseCategory) => (
+            <Listbox.Option
+              key={subExpenseCategory.id}
+              className={({ active }) =>
+                `relative cursor-pointer select-none py-2 px-3 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
+                }`
+              }
+              value={subExpenseCategory}
+            >
+              {subExpenseCategory.name}
             </Listbox.Option>
           ))}
         </Listbox.Options>
