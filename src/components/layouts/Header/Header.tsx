@@ -1,46 +1,57 @@
-import Link from 'next/link'
 import { useLogout } from '@/features/auth/hooks/useLogout'
+import Link from 'next/link'
+import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import Image from 'next/image'
+import { Tab, Tabs } from '@mui/material'
 
 export type HeaderProps = {
   currentUserId: string | null
 }
+
 export const Header = ({
   currentUserId
 }: HeaderProps
 ) => {
 
-  const { data, error, isLoading, mutate } = useLogout()
+  const { mutate } = useLogout()
   return (
-    <header>
-      <nav className='bg-teal-500 px-20'>
-        <div className='flex pt-2 pb-6 justify-between items-center'>
-          <Link href='/' passHref>
-            <div className='flex items-center'>
-              <Image alt='tamemo_top_page' src='tamemo.svg' width={35} height={35} />
-              <span className='font-semibold text-3xl text-white pl-2'>tamemo</span>
-            </div>
-          </Link>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex' }}>
+            <Link href='/' style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <Image alt='tamemo_top_page' src='tamemo.svg' style={{ marginRight: '10px' }} width={35} height={35} />
+              <Typography variant='h5' component='h5' sx={{ color: 'white', fontWeight: 'bold' }}>
+                tamemo
+              </Typography>
+            </Link>
+          </Box>
           {currentUserId &&
-            <button className='text-teal-100 hover:text-white' onClick={() => mutate()}>ログアウト</button>
+            <Button color="inherit" sx={{ color: 'white' }} onClick={() => mutate()}>ログアウト</Button>
           }
           {!currentUserId &&
-            <div className='flex w-36 justify-between'>
-              <Link href='/login' className='text-teal-100 hover:text-white'>ログイン</Link>
-              <Link href='/register' className='text-teal-100 hover:text-white'>新規登録</Link>
+            <div>
+              <Link href='/login'>
+                <Button color="inherit" sx={{ color: 'white' }}>ログイン</Button>
+              </Link>
+              <Link href='/register'>
+                <Button color="inherit" sx={{ color: 'white' }}>新規登録</Button>
+              </Link>
             </div>
           }
-        </div>
-        <div className='flex justify-between w-2/3'>
-          <Link href='/' className='text-teal-100 hover:text-white text-lg'>ホーム</Link>
-          <Link href='/history' className='text-teal-100 hover:text-white text-lg'>履歴</Link>
-          <Link href='#' className='text-teal-100 hover:text-white text-lg'>予算</Link>
-          <Link href='#' className='text-teal-100 hover:text-white text-lg'>資産</Link>
-          <Link href='#' className='text-teal-100 hover:text-white text-lg'>レポート</Link>
-          <Link href='#' className='text-teal-100 hover:text-white text-lg'>掲示板</Link>
-          <Link href='#' className='text-teal-100 hover:text-white text-lg'>設定</Link>
-        </div>
-      </nav>
-    </header>
+        </Toolbar>
+        <Tabs>
+          <Tab label="Page 1" component={Link} href="/page1" />
+          <Tab label="Page 2" component={Link} href="/page2" />
+          <Tab label="Page 3" component={Link} href="/page3" />
+        </Tabs>
+      </AppBar>
+    </Box>
   )
 }
+
