@@ -7,8 +7,6 @@ import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from '
 
 export const TextField = (
   {
-    sx = { width: '250px' },
-    size = 'small',
     ...props
   }: MuiTextFieldProps
 ) => {
@@ -30,8 +28,6 @@ export const TextField = (
 
   return (
     <MuiTextField
-      sx={sx}
-      size={size}
       InputProps={{
         endAdornment: props.type === 'password' && (
           <InputAdornment position="end">
