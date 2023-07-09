@@ -5,6 +5,6 @@ export type LoginCredentials = {
   password: string
 }
 
-export const login = (data:LoginCredentials) => {
-  return axios.post('/login', data)
+export const login = (loginCredentials: LoginCredentials) => {
+  return axios.post('/login', loginCredentials)
 }

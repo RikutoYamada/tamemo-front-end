@@ -1,12 +1,12 @@
 import { axios } from "@/lib/axios";
 
-export type RegisterCredentials = {
+export type RegistrationData = {
   name: string
   email: string
   password: string
   passwordConfirmation: string
 }
 
-export const register = (data: RegisterCredentials) => {
-  return axios.post('/users', data)
+export const register = (registrationData: RegistrationData) => {
+  return axios.post('/users', registrationData)
 } 
