@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react'
 import { NextPageContext } from 'next'
 import Container from '@mui/material/Container'
