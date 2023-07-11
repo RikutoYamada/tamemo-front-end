@@ -79,7 +79,7 @@ const register = () => {
           sx={{ width: '100%' }}
         />
         <TextField
-          id="password_confirmation"
+          id="password-confirmation"
           label="パスワード（確認用）"
           onChange={e => setPasswordConfirmation(e.target.value)}
           type='password'
