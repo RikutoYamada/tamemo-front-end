@@ -1,22 +1,48 @@
-import clsx from 'clsx'
-import React from 'react'
-type TextFieldProps = React.ComponentPropsWithRef<'input'> & {
-  label?: string
-}
+import { useState, MouseEvent } from 'react'
+import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
+
 export const TextField = (
   {
-    className = '',
-    type = 'text',
-    placeholder,
-    onChange,
-    label
-  }: TextFieldProps
+    ...props
+  }: MuiTextFieldProps
 ) => {
+
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
+  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  }
+
+  const determineType = () => {
+    if (props.type === 'password') {
+      return showPassword ? 'text' : 'password'
+    } else {
+      return props.type
+    }
+  }
+
   return (
-    <>
-      <label className='block text-gray-700 text-sm font-bold mb-2'>{label}</label>
-      <input className={clsx('shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', className)}
-      type={type} placeholder={placeholder} onChange={onChange} />
-    </>
+    <MuiTextField
+      InputProps={{
+        endAdornment: props.type === 'password' && (
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </InputAdornment>
+        )
+      }}
+      {...props}
+      type={determineType()}
+    />
   )
 }

@@ -1,60 +1,22 @@
-import clsx from 'clsx'
-import React from 'react';
+import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress';
 
-// TODO: パスの指定方法がうまくいかない修正必要あり（とりあえず一時凌ぎ状態)
-import { Spinner } from '../Spinner';
-
-const variants = {
-  primary: 'bg-teal-500 hover:bg-teal-700 text-white',
-  inverse: 'bg-white text-blue-600',
-  danger: 'bg-red-600 text-white',
-};
-
-const sizes = {
-  sm: 'py-2 px-4 text-sm',
-  md: 'py-2 px-6 text-md',
-  lg: 'py-3 px-8 text-lg',
-};
-
-type IconProps =
-  | { startIcon: React.ReactElement; endIcon?: never }
-  | { endIcon: React.ReactElement; startIcon?: never }
-  | { endIcon?: undefined; startIcon?: undefined };
-
-export type ButtonProps = React.ComponentPropsWithRef<'button'> & {
-  variant?: keyof typeof variants;
-  size?: keyof typeof sizes;
-  isLoading?: boolean;
-  children: React.ReactNode;
-} & IconProps;
+export type ButtonProps = MuiButtonProps & {
+  isLoading?: boolean
+}
 
 export const Button = (
   {
-    type = 'button',
-    className = '',
-    variant = 'primary',
-    size = 'md',
+    children,
+    sx = { color: 'white' },
     isLoading = false,
-    startIcon,
-    endIcon,
-    onClick,
-    children
+    ...props
   }: ButtonProps
 ) => {
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      className={clsx(
-        'flex justify-center items-center border border-gray-300 disabled:opacity-70 disabled:cursor-not-allowed rounded-md shadow-sm font-medium focus:outline-none hover:opacity-80',
-        variants[variant],
-        sizes[size],
-        className
-      )}
-    >
-      {isLoading && <Spinner size="sm" className="text-current" />}
-      {!isLoading && startIcon}
-      <span className="mx-2">{children}</span> {!isLoading && endIcon}
-    </button>
-  );
+    <MuiButton sx={sx} {...props}>
+      {isLoading && <CircularProgress sx={sx} size={20} />}
+      {children}
+    </MuiButton>
+  )
 }
