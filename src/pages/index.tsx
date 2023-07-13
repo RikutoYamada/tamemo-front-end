@@ -1,7 +1,9 @@
 import cookies from "@/utils/cookies"
 import { NextPageContext } from 'next'
-import { RecentHistory } from "@/features/history/components/RecentHistory"
-import { EasyExpenseRegistration } from "@/features/expenses/components/EasyExpenseRegistration"
+// import { RecentHistory } from "@/features/history/components/RecentHistory"
+// import { EasyExpenseRegistration } from "@/features/expenses/components/EasyExpenseRegistration"
+import { RecentExpenses } from "@/features/expenses/components/RecentExpenses";
+import Container from '@mui/material/Container'
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const currentUserId = cookies.get(ctx).current_user_id
@@ -13,8 +15,9 @@ export async function getServerSideProps(ctx: NextPageContext) {
 const Home = () => {
   return (
     <>
-      <EasyExpenseRegistration />
-      <RecentHistory />
+      <Container>
+        <RecentExpenses />
+      </Container>
     </>
   )
 }
