@@ -7,6 +7,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 export const TextField = (
   {
+    style = { backgroundColor: 'white' },
     ...props
   }: MuiTextFieldProps
 ) => {
@@ -28,6 +29,7 @@ export const TextField = (
 
   return (
     <MuiTextField
+      style={style}
       InputProps={{
         endAdornment: props.type === 'password' && (
           <InputAdornment position="end">
