@@ -20,7 +20,7 @@ export const RecentExpenses = () => {
   const { data } = useGetExpenses()
 
   return (
-    <Card sx={{ marginY: '20px', width: '50%' }}>
+    <Card sx={{ margin: '10px', width: '50%' }}>
       <Box sx={{ margin: '20px' }}>
         <Typography sx={{ fontWeight: 'bold' }}>
           最近の支出
