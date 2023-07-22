@@ -1,45 +1,33 @@
-import ReactDatePicker, { registerLocale } from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
 import ja from 'date-fns/locale/ja'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker as MuiDatePicker, DatePickerProps as MuiDatePickerProps } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { TextFieldProps as MuiTextFieldProps } from '@mui/material'
 
 type DatePickerProps = {
-  selected: Date,
-  onChange: (value: Date) => void
+  size?: MuiTextFieldProps['size']
+  sx?: MuiTextFieldProps['sx']
+  value: MuiDatePickerProps<Date>['value']
+  onCahnge: MuiDatePickerProps<Date>['onChange']
 }
-
-const CalendarContainer = ({ className, children }) => {
-  return (
-    <div style={{ padding: "0px", background: "#216ba5", color: "#fff", backgroundColor: '#fff' }}>
-      <div style={{ position: "relative" }}>{children}</div>
-    </div>
-  );
-};
-
-const MyContainer = ({ className, children }) => {
-  return (
-    <div className='p-10 bg-white h-60'>
-      <div className='relative'>
-        {children}
-      </div>
-    </div>
-  );
-};
 
 export const DatePicker = (
   {
-    selected,
-    onChange
+    size = 'small',
+    sx = { width: '35%' },
+    ...props
   }: DatePickerProps
 ) => {
-  registerLocale('ja', ja)
   return (
-    <ReactDatePicker
-      locale='ja'
-      className=''
-      dateFormat='yyyy/MM/dd'
-      wrapperClassName="flex flex-row-reverse"
-      selected={selected}
-      onChange={onChange}
-    />
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
+      <MuiDatePicker value={props.value} onChange={props.onCahnge}
+        slotProps={{
+          toolbar: { hidden: true },
+          textField: {
+            size,
+            sx
+          }
+        }} />
+    </LocalizationProvider>
   )
 }

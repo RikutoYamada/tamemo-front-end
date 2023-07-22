@@ -2,7 +2,7 @@ import { axios } from "@/lib/axios"
 import cookies from "@/utils/cookies"
 
 export type Expense = {
-  subExpenseCategoryId: number
+  subExpenseCategoryId: string
   amount: number
   store: string
   expendedAt: string

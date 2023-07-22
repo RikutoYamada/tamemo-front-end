@@ -1,16 +1,25 @@
-import { Button } from '@mui/material';
-import { Card } from '@/components/elements/Card'
+import Card from '@mui/material/Card'
 import { useCreateExpense } from '../../hooks/useCreateExpense'
 import { Expense } from '../../api/createExpense'
 import { useState } from 'react'
-import { TextField } from '@/components/elements/TextField/TextField'
-import { Listbox } from '@headlessui/react'
-import { ChevronUpDownIcon } from '@heroicons/react/24/solid'
-import { DatePicker } from '@/components/elements/DatePicker'
+import { TextField } from '@/components/elements/TextField'
 import { useGetSubExpenseCategories } from '../../hooks/useGetSubExpenseCategories'
-import ja from 'date-fns/locale/ja'
+import Box from '@mui/material/Box';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Button } from '@/components/elements/Button'
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider'
+import { SelectBox } from '@/components/elements/SelectBox'
+import { DatePicker } from '@/components/elements/DatePicker'
 
-
+type SubExpenseCategory = {
+  createdAt: string
+  id: number
+  mainExpenseCategoryId: number
+  name: string
+  updatedAt: string
+  userId: number
+}
 
 const mainExpenseCategories = [
   { id: 1, name: '食費' },
@@ -18,91 +27,85 @@ const mainExpenseCategories = [
 ]
 
 export const EasyExpenseRegistration = () => {
+  const handleChange = (event: SelectChangeEvent) => {
+    setMainExpenseCategoryId(event.target.value as string)
+  }
+
+  const subhandleChange = (event: SelectChangeEvent) => {
+    setSubExpenseCategoryId(event.target.value as string)
+  }
+  const [value, setValue] = useState<Date | null>(new Date());
+
   const [expendedAt, setExpendedAt] = useState(new Date())
   const [amount, setAmount] = useState<number>(0)
   const [store, setStore] = useState<string>('')
 
-  const [mainExpenseCategory, setMainExpenseCategory] = useState({ id: 1, name: '食費' })
+  const [mainExpenseCategoryId, setMainExpenseCategoryId] = useState('')
+  const [subExpenseCategoryId, setSubExpenseCategoryId] = useState('')
 
-
-  const { mutate } = useCreateExpense()
-  const { data: subExpenseCategories, isLoading } = useGetSubExpenseCategories(mainExpenseCategory.id)
-  const [subExpenseCategory, setSubExpenseCategory] = useState({ id: 1, name: '食料品'})
+  const { mutate, isLoading } = useCreateExpense()
 
   const expense: Expense = {
-    subExpenseCategoryId: subExpenseCategory.id,
+    subExpenseCategoryId,
     amount,
     store,
-    expendedAt: expendedAt.toISOString().slice(0, 10)
+    expendedAt: value?.toISOString().slice(0, 10)
   }
 
+  const { data } = useGetSubExpenseCategories(mainExpenseCategoryId)
+  const subExpenseCategories = data?.data.map((subCategory: SubExpenseCategory) => {
+    return { id: subCategory.id, name: subCategory.name }
+  })
   return (
-    <Card size="md" className="mx-auto mt-8">
-
-      <Button color="secondary" variant="contained">Hello World</Button>
-      <DatePicker selected={expendedAt} onChange={(selectedDate: Date) => { setExpendedAt(selectedDate || expendedAt) }} />
-      <Listbox value={mainExpenseCategory} onChange={setMainExpenseCategory}>
-        <Listbox.Button className='cursor-pointer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'>
-          <div className='flex justify-between'>
-            <div className='text-left'>
-              {mainExpenseCategory.name}
-            </div>
-            <ChevronUpDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
-          </div>
-        </Listbox.Button>
-        <Listbox.Options className='cursor-pointer shadow appearance-none border rounded'>
-          {mainExpenseCategories.map((mainExpenseCategory) => (
-            <Listbox.Option
-              key={mainExpenseCategory.id}
-              className={({ active }) =>
-                `relative cursor-pointer select-none py-2 px-3 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
-                }`
-              }
-              value={mainExpenseCategory}
-            >
-              {mainExpenseCategory.name}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </Listbox>
-      <Listbox value={subExpenseCategory} onChange={setSubExpenseCategory}>
-        <Listbox.Button className='cursor-pointer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'>
-          <div className='flex justify-between'>
-            <div className='text-left'>
-              {subExpenseCategory.name}
-            </div>
-            <ChevronUpDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
-          </div>
-        </Listbox.Button>
-        <Listbox.Options className='cursor-pointer shadow appearance-none border rounded'>
-          {subExpenseCategories?.data.map((subExpenseCategory) => (
-            <Listbox.Option
-              key={subExpenseCategory.id}
-              className={({ active }) =>
-                `relative cursor-pointer select-none py-2 px-3 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
-                }`
-              }
-              value={subExpenseCategory}
-            >
-              {subExpenseCategory.name}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </Listbox>
-      <div className='mt-4'>
-        <TextField
-          className='mb-4'
-          type='number'
-          placeholder='金額を入力してください'
-          onChange={e => setAmount(Number(e.target.value))}
-          label='金額' />
-        <TextField
-          className='mb-4'
-          placeholder='内容を入力してください（お店など）'
-          onChange={e => setStore(e.target.value)}
-          label='内容' />
-        <Button type='submit' onClick={() => { mutate(expense) }} isLoading={isLoading}>保存</Button>
-      </div>
+    <Card sx={{ margin: '10px', width: '50%' }}>
+      <Box sx={{ margin: '20px' }}>
+        <Typography sx={{ fontWeight: 'bold' }}>
+          カンタン支出入力
+        </Typography>
+        <Divider sx={{ borderColor: '#26a69a', borderWidth: '2px', marginBottom: '15px' }} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Box sx={{ width: '50%', display: 'flex', justifyContent: 'space-between' }}>
+              <SelectBox
+                id='main-category-select'
+                label='大項目'
+                options={mainExpenseCategories}
+                selectedId={mainExpenseCategoryId}
+                onChange={handleChange} />
+              <SelectBox
+                id='sub-category-select'
+                label='中項目'
+                options={subExpenseCategories}
+                selectedId={subExpenseCategoryId}
+                onChange={subhandleChange} />
+            </Box>
+            <DatePicker value={value} onCahnge={(selectedDate) => setValue(selectedDate)} />
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <TextField
+              id='amount'
+              label='金額'
+              onChange={e => setAmount(Number(e.target.value))}
+              type='number'
+              size='small'
+              sx={{ width: '75%', marginRight: '10px' }}
+            />
+            <Typography>
+              円
+            </Typography>
+          </Box>
+          <TextField
+            id='detail'
+            label='詳細'
+            onChange={e => setStore(e.target.value)}
+            size='small'
+            sx={{ width: '100%' }}
+          />
+          <Box sx={{ display: 'flex', }}>
+            <Button variant='contained' onClick={() => { mutate(expense) }} isLoading={isLoading} sx={{ width: '100%' }}>保存する</Button>
+          </Box>
+        </Box>
+      </Box>
     </Card>
   )
 }
