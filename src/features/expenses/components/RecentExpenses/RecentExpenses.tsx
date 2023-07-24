@@ -17,7 +17,7 @@ type Expense = {
 }
 
 export const RecentExpenses = () => {
-  const { data } = useGetExpenses()
+  const { data: expenses } = useGetExpenses()
 
   return (
     <Card sx={{ margin: '10px', width: '50%' }}>
@@ -26,7 +26,7 @@ export const RecentExpenses = () => {
           最近の支出
         </Typography>
         <Divider sx={{ borderColor: '#26a69a', borderWidth: '2px', marginBottom: '15px' }} />
-        {data?.data.map((expense: Expense) => (
+        {expenses?.data.map((expense: Expense) => (
           <Box key={expense.id}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Box>
@@ -44,7 +44,7 @@ export const RecentExpenses = () => {
             <Divider />
           </Box>
         ))}
-        <Box sx={{ display: 'flex', flexDirection: 'row-reverse', marginTop: '15px'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'row-reverse', marginTop: '15px' }}>
           <CustomLink href='/history'>
             <ArrowCircleRightIcon fontSize='small' />
             <Typography>
