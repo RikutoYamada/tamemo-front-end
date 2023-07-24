@@ -1,16 +1,17 @@
-import Card from '@mui/material/Card'
-import { useCreateExpense } from '../../hooks/useCreateExpense'
-import { Expense } from '../../api/createExpense'
 import { useState } from 'react'
-import { TextField } from '@/components/elements/TextField'
-import { useGetSubExpenseCategories } from '../../hooks/useGetSubExpenseCategories'
 import Box from '@mui/material/Box';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button } from '@/components/elements/Button'
+import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider'
+import { SelectChangeEvent } from '@mui/material/Select';
+
+import { useCreateExpense } from '../../hooks/useCreateExpense'
+import { useGetSubExpenseCategories } from '../../hooks/useGetSubExpenseCategories'
+import { Button } from '@/components/elements/Button'
+import { TextField } from '@/components/elements/TextField'
 import { SelectBox } from '@/components/elements/SelectBox'
 import { DatePicker } from '@/components/elements/DatePicker'
+import { Expense } from '../../api/createExpense'
 
 type SubExpenseCategory = {
   createdAt: string
@@ -26,36 +27,31 @@ const mainExpenseCategories = [
   { id: 2, name: '交通費' }
 ]
 
+const handleChangeSelectedCategory = (event: SelectChangeEvent, setCategoryId: Function) => {
+  setCategoryId(event.target.value as string)
+}
+
 export const EasyExpenseRegistration = () => {
-  const handleChange = (event: SelectChangeEvent) => {
-    setMainExpenseCategoryId(event.target.value as string)
-  }
-
-  const subhandleChange = (event: SelectChangeEvent) => {
-    setSubExpenseCategoryId(event.target.value as string)
-  }
-  const [value, setValue] = useState<Date | null>(new Date());
-
-  const [expendedAt, setExpendedAt] = useState(new Date())
   const [amount, setAmount] = useState<number>(0)
+  const [expendedAt, setExpendedAt] = useState<Date>(new Date())
   const [store, setStore] = useState<string>('')
-
   const [mainExpenseCategoryId, setMainExpenseCategoryId] = useState('')
   const [subExpenseCategoryId, setSubExpenseCategoryId] = useState('')
 
-  const { mutate, isLoading } = useCreateExpense()
-
   const expense: Expense = {
-    subExpenseCategoryId,
     amount,
     store,
-    expendedAt: value?.toISOString().slice(0, 10)
+    expendedAt: expendedAt?.toISOString().slice(0, 10),
+    subExpenseCategoryId
   }
 
-  const { data } = useGetSubExpenseCategories(mainExpenseCategoryId)
-  const subExpenseCategories = data?.data.map((subCategory: SubExpenseCategory) => {
+  const { mutate, isLoading } = useCreateExpense()
+  const { data: rawSubExpenseCategories } = useGetSubExpenseCategories(mainExpenseCategoryId)
+
+  const subExpenseCategories = rawSubExpenseCategories?.data.map((subCategory: SubExpenseCategory) => {
     return { id: subCategory.id, name: subCategory.name }
   })
+
   return (
     <Card sx={{ margin: '10px', width: '50%' }}>
       <Box sx={{ margin: '20px' }}>
@@ -71,15 +67,22 @@ export const EasyExpenseRegistration = () => {
                 label='大項目'
                 options={mainExpenseCategories}
                 selectedId={mainExpenseCategoryId}
-                onChange={handleChange} />
+                onChange={event => handleChangeSelectedCategory(event, setMainExpenseCategoryId)} />
               <SelectBox
                 id='sub-category-select'
                 label='中項目'
                 options={subExpenseCategories}
                 selectedId={subExpenseCategoryId}
-                onChange={subhandleChange} />
+                onChange={event => handleChangeSelectedCategory(event, setSubExpenseCategoryId)} />
             </Box>
-            <DatePicker value={value} onCahnge={(selectedDate) => setValue(selectedDate)} />
+            {/*
+              If selectedDate is null, set the default value to the current date.
+              selectedDate forgives null, but setExpendedAt does not.
+            */}
+            <DatePicker
+              value={expendedAt}
+              onCahnge={(selectedDate) => setExpendedAt(selectedDate ? selectedDate : new Date())}
+            />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <TextField
@@ -88,6 +91,7 @@ export const EasyExpenseRegistration = () => {
               onChange={e => setAmount(Number(e.target.value))}
               type='number'
               size='small'
+              placeholder='金額を入力してください'
               sx={{ width: '75%', marginRight: '10px' }}
             />
             <Typography>
@@ -99,10 +103,18 @@ export const EasyExpenseRegistration = () => {
             label='詳細'
             onChange={e => setStore(e.target.value)}
             size='small'
+            placeholder='支出の詳細を入力してください(お店など）'
             sx={{ width: '100%' }}
           />
           <Box sx={{ display: 'flex', }}>
-            <Button variant='contained' onClick={() => { mutate(expense) }} isLoading={isLoading} sx={{ width: '100%' }}>保存する</Button>
+            <Button
+              variant='contained'
+              onClick={() => { mutate(expense) }}
+              isLoading={isLoading}
+              sx={{ width: '100%' }}
+            >
+              保存する
+            </Button>
           </Box>
         </Box>
       </Box>
