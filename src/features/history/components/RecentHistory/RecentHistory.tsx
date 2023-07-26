@@ -7,7 +7,7 @@ type Expense = {
   amount: number
   mainCategory: string
   subCategory: string
-  store: string
+  detail: string
   expendedAt: string
 }
 
@@ -20,7 +20,7 @@ export const RecentHistory = () => {
         <div key={expense.id}>
           <h1 className="text-gray-400 text-xs">{expense.expendedAt.replace(/-/g, '/')}  {expense.mainCategory} ＞ {expense.subCategory}</h1>
           <div className="flex justify-between">
-            <h1>{expense.store}</h1>
+            <h1>{expense.detail}</h1>
             <h1>-{expense.amount}円</h1>
           </div>
           <hr />

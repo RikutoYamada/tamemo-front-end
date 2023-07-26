@@ -4,7 +4,7 @@ import cookies from "@/utils/cookies"
 export type Expense = {
   subExpenseCategoryId: string
   amount: number
-  store: string
+  detail: string
   expendedAt: string
 }
 

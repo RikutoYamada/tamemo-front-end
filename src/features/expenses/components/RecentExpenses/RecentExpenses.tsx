@@ -12,7 +12,7 @@ type Expense = {
   amount: number
   mainCategory: string
   subCategory: string
-  store: string
+  detail: string
   expendedAt: string
 }
 
@@ -34,7 +34,7 @@ export const RecentExpenses = () => {
                   {expense.expendedAt.replace(/-/g, '/')}  {expense.mainCategory} ＞ {expense.subCategory}
                 </Typography>
                 <Typography>
-                  {expense.store}
+                  {expense.detail}
                 </Typography>
               </Box>
               <Typography>

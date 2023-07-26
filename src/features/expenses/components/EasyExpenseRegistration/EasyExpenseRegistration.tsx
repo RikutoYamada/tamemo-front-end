@@ -34,13 +34,13 @@ const handleChangeSelectedCategory = (event: SelectChangeEvent, setCategoryId: F
 export const EasyExpenseRegistration = () => {
   const [amount, setAmount] = useState<number>(0)
   const [expendedAt, setExpendedAt] = useState<Date>(new Date())
-  const [store, setStore] = useState<string>('')
+  const [detail, setDetail] = useState<string>('')
   const [mainExpenseCategoryId, setMainExpenseCategoryId] = useState('')
   const [subExpenseCategoryId, setSubExpenseCategoryId] = useState('')
 
   const expense: Expense = {
     amount,
-    store,
+    detail,
     expendedAt: expendedAt?.toISOString().slice(0, 10),
     subExpenseCategoryId
   }
@@ -101,7 +101,7 @@ export const EasyExpenseRegistration = () => {
           <TextField
             id='detail'
             label='詳細'
-            onChange={e => setStore(e.target.value)}
+            onChange={e => setDetail(e.target.value)}
             size='small'
             placeholder='支出の詳細を入力してください(お店など）'
             sx={{ width: '100%' }}
