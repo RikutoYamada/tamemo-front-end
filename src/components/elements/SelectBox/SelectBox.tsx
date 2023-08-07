@@ -14,22 +14,16 @@ type SelectBoxProps = {
   label: string
   size?: FormControlProps['size']
   sx?: FormControlProps['sx']
+  isLoading?: boolean
   options: option[]
   selectedId: string
   onChange: (event: SelectChangeEvent) => void
 }
 
-//TODO initialize
-const mainExpenseCategories = [
-  { id: 1, name: '食費' },
-  { id: 2, name: '交通費' }
-]
-
 export const SelectBox = (
   {
     size = 'small',
     sx = { width: '49%' },
-    options = mainExpenseCategories,
     ...props
   }: SelectBoxProps
 ) => {
@@ -44,13 +38,17 @@ export const SelectBox = (
       <Select
         labelId={InputLabelComponentId}
         id={SelectComponentId}
-        value={props.selectedId}
+        value={props.isLoading ? '1' : props.selectedId}
         label={props.label}
         onChange={props.onChange}
       >
-        {options.map(option => (
+        {props.isLoading ? (
+          <MenuItem value='1'>
+            読み込み中...
+          </MenuItem>
+        ) : (props.options.map(option => (
           <MenuItem key={option.id} value={option.id}>{option.name}</MenuItem>
-        ))}
+        )))}
       </Select>
     </FormControl>
   )

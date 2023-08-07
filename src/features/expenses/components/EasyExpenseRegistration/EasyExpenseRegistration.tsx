@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import Box from '@mui/material/Box';
+import { useState, useEffect } from 'react'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import { SelectChangeEvent } from '@mui/material/Select';
+import { SelectChangeEvent } from '@mui/material/Select'
 
 import { useCreateExpense } from '../../hooks/useCreateExpense'
 import { useGetSubExpenseCategories } from '../../hooks/useGetSubExpenseCategories'
@@ -12,6 +12,7 @@ import { TextField } from '@/components/elements/TextField'
 import { SelectBox } from '@/components/elements/SelectBox'
 import { DatePicker } from '@/components/elements/DatePicker'
 import { Expense } from '../../api/createExpense'
+import { MAIN_EXPENSE_CATEGORIES } from '@/const'
 
 type SubExpenseCategory = {
   createdAt: string
@@ -22,21 +23,20 @@ type SubExpenseCategory = {
   userId: number
 }
 
-const mainExpenseCategories = [
-  { id: 1, name: '食費' },
-  { id: 2, name: '交通費' }
-]
-
-const handleChangeSelectedCategory = (event: SelectChangeEvent, setCategoryId: Function) => {
+const handleChangeSelectedCategory = (event: SelectChangeEvent, setCategoryId: Function, setIsSubExpenseCategoryIdLoading?: Function) => {
   setCategoryId(event.target.value as string)
+  if (setIsSubExpenseCategoryIdLoading) {
+    setIsSubExpenseCategoryIdLoading(true)
+  }
 }
 
 export const EasyExpenseRegistration = () => {
   const [amount, setAmount] = useState<number>(0)
   const [expendedAt, setExpendedAt] = useState<Date>(new Date())
   const [detail, setDetail] = useState<string>('')
-  const [mainExpenseCategoryId, setMainExpenseCategoryId] = useState('')
-  const [subExpenseCategoryId, setSubExpenseCategoryId] = useState('')
+  const [mainExpenseCategoryId, setMainExpenseCategoryId] = useState('1')
+  const [subExpenseCategoryId, setSubExpenseCategoryId] = useState('1')
+  const [isSubExpenseCategoryIdLoading, setIsSubExpenseCategoryIdLoading] = useState(false)
 
   const expense: Expense = {
     amount,
@@ -46,11 +46,18 @@ export const EasyExpenseRegistration = () => {
   }
 
   const { mutate, isLoading } = useCreateExpense()
-  const { data: rawSubExpenseCategories } = useGetSubExpenseCategories(mainExpenseCategoryId)
+  const { data: rawSubExpenseCategories, isLoading: isSubExpenseCategoriesLoading } = useGetSubExpenseCategories(mainExpenseCategoryId)
 
   const subExpenseCategories = rawSubExpenseCategories?.data.map((subCategory: SubExpenseCategory) => {
     return { id: subCategory.id, name: subCategory.name }
   })
+
+  useEffect(() => {
+    if (rawSubExpenseCategories?.data) {
+      setSubExpenseCategoryId(rawSubExpenseCategories?.data[0].id.toString())
+      setIsSubExpenseCategoryIdLoading(false)
+    }
+  }, [rawSubExpenseCategories])
 
   return (
     <Card sx={{ margin: '10px', width: '50%' }}>
@@ -65,14 +72,15 @@ export const EasyExpenseRegistration = () => {
               <SelectBox
                 id='main-category-select'
                 label='大項目'
-                options={mainExpenseCategories}
+                options={MAIN_EXPENSE_CATEGORIES}
                 selectedId={mainExpenseCategoryId}
-                onChange={event => handleChangeSelectedCategory(event, setMainExpenseCategoryId)} />
+                onChange={event => handleChangeSelectedCategory(event, setMainExpenseCategoryId, setIsSubExpenseCategoryIdLoading)} />
               <SelectBox
                 id='sub-category-select'
                 label='中項目'
                 options={subExpenseCategories}
                 selectedId={subExpenseCategoryId}
+                isLoading={isSubExpenseCategoriesLoading || isSubExpenseCategoryIdLoading}
                 onChange={event => handleChangeSelectedCategory(event, setSubExpenseCategoryId)} />
             </Box>
             {/*
@@ -88,7 +96,7 @@ export const EasyExpenseRegistration = () => {
             <TextField
               id='amount'
               label='金額'
-              onChange={e => setAmount(Number(e.target.value))}
+              onChange={event => setAmount(Number(event.target.value))}
               type='number'
               size='small'
               placeholder='金額を入力してください'
@@ -101,7 +109,7 @@ export const EasyExpenseRegistration = () => {
           <TextField
             id='detail'
             label='詳細'
-            onChange={e => setDetail(e.target.value)}
+            onChange={event => setDetail(event.target.value)}
             size='small'
             placeholder='支出の詳細を入力してください(お店など）'
             sx={{ width: '100%' }}
