@@ -8,6 +8,6 @@ export const useCreateExpense = () => {
     },
     onError: () => {
       console.log('onError')
-    }
+    },
   })
 }

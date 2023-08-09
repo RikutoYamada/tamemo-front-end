@@ -1,16 +1,11 @@
-import { useState, ReactNode } from 'react';
+import { useState, ReactNode } from 'react'
 import Link, { LinkProps } from 'next/link'
 
 type CustomLinkProps = LinkProps & {
   children: ReactNode
 }
 
-export const CustomLink = (
-  {
-    children,
-    ...props
-  }: CustomLinkProps
-) => {
+export const CustomLink = ({ children, ...props }: CustomLinkProps) => {
   const [isHovered, setIsHovered] = useState(false)
 
   const handleMouseEnter = () => {
@@ -24,13 +19,13 @@ export const CustomLink = (
   const hoverStyle = {
     color: 'darkblue',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 
   const defaultStyle = {
     ...hoverStyle,
     textDecoration: 'none',
-    color: 'royalblue'
+    color: 'royalblue',
   }
 
   return (

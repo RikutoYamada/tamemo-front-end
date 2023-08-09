@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { NextPageContext } from 'next'
 import Container from '@mui/material/Container'
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
-import cookies from "@/utils/cookies"
+import cookies from '@/utils/cookies'
 import { useRegister } from '@/features/auth/hooks/useRegister'
 import { RegistrationData } from '@/features/auth/api/register'
 import { Button } from '@/components/elements/Button'
@@ -16,7 +16,7 @@ const boxStyles = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '40px'
+  gap: '40px',
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
@@ -25,13 +25,13 @@ export async function getServerSideProps(ctx: NextPageContext) {
     return {
       redirect: {
         destination: '/',
-        permanent: true
-      }
+        permanent: true,
+      },
     }
   }
 
   return {
-    props: {}
+    props: {},
   }
 }
 
@@ -46,9 +46,8 @@ const register = () => {
     name,
     email,
     password,
-    passwordConfirmation
+    passwordConfirmation,
   }
-
 
   return (
     <Container sx={{ paddingY: '40px' }}>
@@ -58,37 +57,39 @@ const register = () => {
         </Typography>
 
         <TextField
-          id="name"
-          label="お名前"
-          onChange={e => setName(e.target.value)}
+          id='name'
+          label='お名前'
+          onChange={(e) => setName(e.target.value)}
           type='text'
           sx={{ width: '100%' }}
         />
         <TextField
-          id="email"
-          label="メール"
-          onChange={e => setEmail(e.target.value)}
+          id='email'
+          label='メール'
+          onChange={(e) => setEmail(e.target.value)}
           type='email'
           sx={{ width: '100%' }}
         />
         <TextField
-          id="password"
-          label="パスワード"
-          onChange={e => setPassword(e.target.value)}
+          id='password'
+          label='パスワード'
+          onChange={(e) => setPassword(e.target.value)}
           type='password'
           sx={{ width: '100%' }}
         />
         <TextField
-          id="password-confirmation"
-          label="パスワード（確認用）"
-          onChange={e => setPasswordConfirmation(e.target.value)}
+          id='password-confirmation'
+          label='パスワード（確認用）'
+          onChange={(e) => setPasswordConfirmation(e.target.value)}
           type='password'
           sx={{ width: '100%' }}
         />
         <Button
           variant='contained'
           isLoading={isLoading}
-          onClick={() => { mutate(registrationData) }}
+          onClick={() => {
+            mutate(registrationData)
+          }}
           sx={{ width: '100%', height: '56px' }}
         >
           会員登録

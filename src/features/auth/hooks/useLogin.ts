@@ -12,6 +12,6 @@ export const useLogin = () => {
     },
     onError: () => {
       console.log('onError')
-    }
+    },
   })
 }

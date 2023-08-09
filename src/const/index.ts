@@ -17,5 +17,5 @@ export const MAIN_EXPENSE_CATEGORIES = [
   { id: 14, name: '住宅' },
   { id: 15, name: '税・社会保障' },
   { id: 16, name: '保険' },
-  { id: 17, name: 'その他' }
+  { id: 17, name: 'その他' },
 ]

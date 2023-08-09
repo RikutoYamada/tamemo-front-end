@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem'
 
 const navigationLinks = [
   { name: 'ホーム', url: '/' },
-  { name: '履歴', url: '/history' }
+  { name: '履歴', url: '/history' },
 ]
 
 export const NavigationMenu = () => {
@@ -24,20 +24,20 @@ export const NavigationMenu = () => {
     <>
       <IconButton
         id='menu-button'
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="open drawer"
+        size='large'
+        edge='start'
+        color='inherit'
+        aria-label='open drawer'
         aria-controls={open ? 'menu' : undefined}
         aria-expanded={open ? 'true' : undefined}
-        aria-haspopup="true"
+        aria-haspopup='true'
         sx={{ mr: 2 }}
         onClick={handleClick}
       >
         <MenuIcon />
       </IconButton>
       <Menu
-        id="menu"
+        id='menu'
         MenuListProps={{
           'aria-labelledby': 'menu-button',
         }}
@@ -46,7 +46,11 @@ export const NavigationMenu = () => {
         onClose={handleClose}
       >
         {navigationLinks.map((navigationLink) => (
-          <Link href={`${navigationLink.url}`} key={navigationLink.name} style={{ textDecoration: 'none' }}>
+          <Link
+            href={`${navigationLink.url}`}
+            key={navigationLink.name}
+            style={{ textDecoration: 'none' }}
+          >
             <MenuItem onClick={handleClose} sx={{ color: 'black' }}>
               {navigationLink.name}
             </MenuItem>

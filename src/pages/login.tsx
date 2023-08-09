@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { NextPageContext } from 'next'
 import Container from '@mui/material/Container'
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
-import cookies from "@/utils/cookies"
+import cookies from '@/utils/cookies'
 import { useLogin } from '@/features/auth/hooks/useLogin'
 import { LoginCredentials } from '@/features/auth/api/login'
 import { Button } from '@/components/elements/Button'
@@ -16,7 +16,7 @@ const boxStyles = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '40px'
+  gap: '40px',
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
@@ -25,13 +25,13 @@ export async function getServerSideProps(ctx: NextPageContext) {
     return {
       redirect: {
         destination: '/',
-        permanent: true
-      }
+        permanent: true,
+      },
     }
   }
 
   return {
-    props: {}
+    props: {},
   }
 }
 
@@ -42,7 +42,7 @@ const login = () => {
   const [password, setPassword] = useState<string>('')
   const loginCredentials: LoginCredentials = {
     email,
-    password
+    password,
   }
 
   return (
@@ -53,23 +53,25 @@ const login = () => {
         </Typography>
 
         <TextField
-          id="email"
-          label="メール"
-          onChange={e => setEmail(e.target.value)}
+          id='email'
+          label='メール'
+          onChange={(e) => setEmail(e.target.value)}
           type='email'
           sx={{ width: '100%' }}
         />
         <TextField
-          id="password"
-          label="パスワード"
-          onChange={e => setPassword(e.target.value)}
+          id='password'
+          label='パスワード'
+          onChange={(e) => setPassword(e.target.value)}
           type='password'
           sx={{ width: '100%' }}
         />
         <Button
           variant='contained'
           isLoading={isLoading}
-          onClick={() => { mutate(loginCredentials) }}
+          onClick={() => {
+            mutate(loginCredentials)
+          }}
           sx={{ width: '100%', height: '56px' }}
         >
           ログイン

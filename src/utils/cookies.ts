@@ -17,7 +17,7 @@ const cookies = {
   },
   destroy: ({ ctx, name }: Arguments) => {
     nookies.destroy(ctx, name)
-  }
+  },
 }
 
 export default cookies

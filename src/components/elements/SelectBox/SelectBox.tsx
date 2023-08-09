@@ -1,7 +1,7 @@
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { FormControlProps } from '@mui/material/FormControl'
 
 type option = {
@@ -20,21 +20,13 @@ type SelectBoxProps = {
   onChange: (event: SelectChangeEvent) => void
 }
 
-export const SelectBox = (
-  {
-    size = 'small',
-    sx = { width: '49%' },
-    ...props
-  }: SelectBoxProps
-) => {
+export const SelectBox = ({ size = 'small', sx = { width: '49%' }, ...props }: SelectBoxProps) => {
   const SelectComponentId = props.id
   const InputLabelComponentId = props.id?.concat('-label')
 
   return (
     <FormControl size={size} sx={sx}>
-      <InputLabel id={InputLabelComponentId}>
-        {props.label}
-      </InputLabel>
+      <InputLabel id={InputLabelComponentId}>{props.label}</InputLabel>
       <Select
         labelId={InputLabelComponentId}
         id={SelectComponentId}
@@ -43,12 +35,14 @@ export const SelectBox = (
         onChange={props.onChange}
       >
         {props.isLoading ? (
-          <MenuItem value='1'>
-            読み込み中...
-          </MenuItem>
-        ) : (props.options.map(option => (
-          <MenuItem key={option.id} value={option.id}>{option.name}</MenuItem>
-        )))}
+          <MenuItem value='1'>読み込み中...</MenuItem>
+        ) : (
+          props.options.map((option) => (
+            <MenuItem key={option.id} value={option.id}>
+              {option.name}
+            </MenuItem>
+          ))
+        )}
       </Select>
     </FormControl>
   )

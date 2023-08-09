@@ -1,5 +1,5 @@
-import { axios } from "@/lib/axios"
-import cookies from "@/utils/cookies"
+import { axios } from '@/lib/axios'
+import cookies from '@/utils/cookies'
 
 export type Expense = {
   subExpenseCategoryId: string

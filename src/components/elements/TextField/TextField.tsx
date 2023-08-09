@@ -5,18 +5,15 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
-export const TextField = (
-  {
-    style = { backgroundColor: 'white' },
-    ...props
-  }: MuiTextFieldProps
-) => {
-
+export const TextField = ({
+  style = { backgroundColor: 'white' },
+  ...props
+}: MuiTextFieldProps) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+    event.preventDefault()
   }
 
   const determineType = () => {
@@ -32,16 +29,16 @@ export const TextField = (
       style={style}
       InputProps={{
         endAdornment: props.type === 'password' && (
-          <InputAdornment position="end">
+          <InputAdornment position='end'>
             <IconButton
-              aria-label="toggle password visibility"
+              aria-label='toggle password visibility'
               onClick={handleClickShowPassword}
               onMouseDown={handleMouseDownPassword}
             >
               {showPassword ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
-        )
+        ),
       }}
       {...props}
       type={determineType()}

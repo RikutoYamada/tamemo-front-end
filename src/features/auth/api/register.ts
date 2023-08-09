@@ -1,4 +1,4 @@
-import { axios } from "@/lib/axios";
+import { axios } from '@/lib/axios'
 
 export type RegistrationData = {
   name: string
@@ -9,4 +9,4 @@ export type RegistrationData = {
 
 export const register = (registrationData: RegistrationData) => {
   return axios.post('/users', registrationData)
-} 
+}
