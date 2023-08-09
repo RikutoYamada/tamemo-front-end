@@ -8,7 +8,6 @@ import theme from '../theme'
 import createEmotionCache from '../createEmotionCache'
 
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { RecoilRoot } from 'recoil'
 
 import { Header } from '@/components/layouts/Header'
 
@@ -24,15 +23,13 @@ export interface MyAppProps extends AppProps {
 const MyApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps }: MyAppProps) => {
   return (
     <CacheProvider value={emotionCache}>
-      <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Header currentUserId={pageProps.currentUserId} />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </QueryClientProvider>
-      </RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Header currentUserId={pageProps.currentUserId} />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </QueryClientProvider>
     </CacheProvider>
   )
 }
