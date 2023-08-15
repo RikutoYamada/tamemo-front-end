@@ -29,7 +29,7 @@ export const RecentExpenses = () => {
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Box>
                 <Typography sx={{ color: '#808080', fontSize: 13 }}>
-                  {expense.expendedAt.replace(/-/g, '/')} {expense.mainCategory} ＞{' '}
+                  {expense.expendedAt.replace(/-/g, '/')} {expense.mainCategory} ＞
                   {expense.subCategory}
                 </Typography>
                 <Typography>{expense.detail}</Typography>
