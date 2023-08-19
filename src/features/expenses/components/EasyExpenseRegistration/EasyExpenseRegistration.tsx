@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import { SelectChangeEvent } from '@mui/material/Select'
+import Typography from '@mui/material/Typography'
+import { useState, useEffect } from 'react'
 
-import { useCreateExpense } from '../../hooks/useCreateExpense'
-import { useGetSubExpenseCategories } from '../../hooks/useGetSubExpenseCategories'
 import { Button } from '@/components/elements/Button'
-import { TextField } from '@/components/elements/TextField'
-import { SelectBox } from '@/components/elements/SelectBox'
 import { DatePicker } from '@/components/elements/DatePicker'
-import { Expense } from '../../api/createExpense'
+import { SelectBox } from '@/components/elements/SelectBox'
+import { TextField } from '@/components/elements/TextField'
 import { MAIN_EXPENSE_CATEGORIES } from '@/const'
+import { Expense } from '@/features/expenses/api/createExpense'
+import { useCreateExpense } from '@/features/expenses/hooks/useCreateExpense'
+import { useGetSubExpenseCategories } from '@/features/expenses/hooks/useGetSubExpenseCategories'
 
 type SubExpenseCategory = {
   createdAt: string
@@ -28,7 +28,7 @@ const handleChangeSelectedCategory = (
   setCategoryId: Function,
   setIsSubExpenseCategoryIdLoading?: Function,
 ) => {
-  setCategoryId(event.target.value as string)
+  setCategoryId(event.target.value )
   if (setIsSubExpenseCategoryIdLoading) {
     setIsSubExpenseCategoryIdLoading(true)
   }

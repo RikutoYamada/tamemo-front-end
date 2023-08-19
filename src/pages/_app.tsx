@@ -1,15 +1,13 @@
-import * as React from 'react'
-import Head from 'next/head'
-import { AppProps } from 'next/app'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
-import theme from '../theme'
-import createEmotionCache from '../createEmotionCache'
-
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
+import { AppProps } from 'next/app'
+import * as React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import { Header } from '@/components/layouts/Header'
+import createEmotionCache from '@/createEmotionCache'
+import theme from '@/theme'
 
 const queryClient = new QueryClient()
 

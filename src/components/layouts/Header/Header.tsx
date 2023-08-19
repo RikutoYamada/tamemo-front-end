@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import Image from 'next/image'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { useLogout } from '@/features/auth/hooks/useLogout'
 import { Button } from '@/components/elements/Button'
 import { NavigationMenu } from '@/components/elements/NavigationMenu'
+import { useLogout } from '@/features/auth/hooks/useLogout'
 
 export type HeaderProps = {
   currentUserId: string | null

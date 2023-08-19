@@ -1,5 +1,7 @@
 import Link from 'next/link'
+
 import { useGetExpenses } from '@/features/expenses/hooks/useGetExpenses'
+
 import { Card } from '@/components/elements/Card'
 
 type Expense = {

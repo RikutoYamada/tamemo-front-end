@@ -1,8 +1,8 @@
-import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
+import { FormControlProps } from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { FormControlProps } from '@mui/material/FormControl'
 
 type option = {
   id: number
