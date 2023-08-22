@@ -4,7 +4,7 @@ import { createExpense } from '@/features/expenses/api/createExpense'
 
 export const useCreateExpense = () => {
   return useMutation(createExpense, {
-    onSuccess: (res) => {
+    onSuccess: () => {
       console.log('onSuccess')
     },
     onError: () => {

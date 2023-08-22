@@ -6,15 +6,7 @@ import Typography from '@mui/material/Typography'
 
 import { CustomLink } from '@/components/elements/CustomLink'
 import { useGetExpenses } from '@/features/expenses/hooks/useGetExpenses'
-
-type Expense = {
-  id: number
-  amount: number
-  mainCategory: string
-  subCategory: string
-  detail: string
-  expendedAt: string
-}
+import { Expense } from '@/features/expenses/types'
 
 export const RecentExpenses = () => {
   const { data: expenses } = useGetExpenses()
@@ -24,7 +16,7 @@ export const RecentExpenses = () => {
       <Box sx={{ margin: '20px' }}>
         <Typography sx={{ fontWeight: 'bold' }}>最近の支出</Typography>
         <Divider sx={{ borderColor: '#26a69a', borderWidth: '2px', marginBottom: '15px' }} />
-        {expenses?.data.map((expense: Expense) => (
+        {expenses?.map((expense: Expense) => (
           <Box key={expense.id}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Box>
