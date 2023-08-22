@@ -1,11 +1,11 @@
-import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight'
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
 
-import { useGetExpenses } from '@/features/expenses/hooks/useGetExpenses'
 import { CustomLink } from '@/components/elements/CustomLink'
+import { useGetExpenses } from '@/features/expenses/hooks/useGetExpenses'
 
 type Expense = {
   id: number

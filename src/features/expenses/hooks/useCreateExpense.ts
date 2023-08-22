@@ -1,5 +1,6 @@
 import { useMutation } from 'react-query'
-import { createExpense } from '../api/createExpense'
+
+import { createExpense } from '@/features/expenses/api/createExpense'
 
 export const useCreateExpense = () => {
   return useMutation(createExpense, {

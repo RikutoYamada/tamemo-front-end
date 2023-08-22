@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
+
 import { register } from '@/features/auth/api/register'
 import cookies from '@/utils/cookies'
 

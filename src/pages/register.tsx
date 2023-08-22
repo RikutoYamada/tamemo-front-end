@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import { NextPageContext } from 'next'
-import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import { NextPageContext } from 'next'
+import { useState } from 'react'
 
-import cookies from '@/utils/cookies'
-import { useRegister } from '@/features/auth/hooks/useRegister'
-import { RegistrationData } from '@/features/auth/api/register'
 import { Button } from '@/components/elements/Button'
 import { TextField } from '@/components/elements/TextField/TextField'
+import { RegistrationData } from '@/features/auth/api/register'
+import { useRegister } from '@/features/auth/hooks/useRegister'
+import cookies from '@/utils/cookies'
 
 const boxStyles = {
   width: '600px',
