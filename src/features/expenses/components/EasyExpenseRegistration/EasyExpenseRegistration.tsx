@@ -10,25 +10,16 @@ import { DatePicker } from '@/components/elements/DatePicker'
 import { SelectBox } from '@/components/elements/SelectBox'
 import { TextField } from '@/components/elements/TextField'
 import { MAIN_EXPENSE_CATEGORIES } from '@/const'
-import { Expense } from '@/features/expenses/api/createExpense'
 import { useCreateExpense } from '@/features/expenses/hooks/useCreateExpense'
 import { useGetSubExpenseCategories } from '@/features/expenses/hooks/useGetSubExpenseCategories'
-
-type SubExpenseCategory = {
-  createdAt: string
-  id: number
-  mainExpenseCategoryId: number
-  name: string
-  updatedAt: string
-  userId: number
-}
+import { ExpenseForPost, SubExpenseCategory } from '@/features/expenses/types'
 
 const handleChangeSelectedCategory = (
   event: SelectChangeEvent,
-  setCategoryId: Function,
-  setIsSubExpenseCategoryIdLoading?: Function,
+  setCategoryId: (categoryId: string) => void,
+  setIsSubExpenseCategoryIdLoading?: (isLoading: boolean) => void,
 ) => {
-  setCategoryId(event.target.value )
+  setCategoryId(event.target.value)
   if (setIsSubExpenseCategoryIdLoading) {
     setIsSubExpenseCategoryIdLoading(true)
   }
@@ -42,7 +33,7 @@ export const EasyExpenseRegistration = () => {
   const [subExpenseCategoryId, setSubExpenseCategoryId] = useState('1')
   const [isSubExpenseCategoryIdLoading, setIsSubExpenseCategoryIdLoading] = useState(false)
 
-  const expense: Expense = {
+  const expense: ExpenseForPost = {
     amount,
     detail,
     expendedAt: expendedAt?.toISOString().slice(0, 10),
@@ -53,15 +44,13 @@ export const EasyExpenseRegistration = () => {
   const { data: rawSubExpenseCategories, isLoading: isSubExpenseCategoriesLoading } =
     useGetSubExpenseCategories(mainExpenseCategoryId)
 
-  const subExpenseCategories = rawSubExpenseCategories?.data.map(
-    (subCategory: SubExpenseCategory) => {
-      return { id: subCategory.id, name: subCategory.name }
-    },
-  )
+  const subExpenseCategories = rawSubExpenseCategories?.map((subCategory: SubExpenseCategory) => {
+    return { id: subCategory.id, name: subCategory.name }
+  })
 
   useEffect(() => {
-    if (rawSubExpenseCategories?.data) {
-      setSubExpenseCategoryId(rawSubExpenseCategories?.data[0].id.toString())
+    if (rawSubExpenseCategories) {
+      setSubExpenseCategoryId(rawSubExpenseCategories[0].id.toString())
       setIsSubExpenseCategoryIdLoading(false)
     }
   }, [rawSubExpenseCategories])

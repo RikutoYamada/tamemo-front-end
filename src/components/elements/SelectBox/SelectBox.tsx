@@ -15,7 +15,7 @@ type SelectBoxProps = {
   size?: FormControlProps['size']
   sx?: FormControlProps['sx']
   isLoading?: boolean
-  options: option[]
+  options: option[] | undefined
   selectedId: string
   onChange: (event: SelectChangeEvent) => void
 }
@@ -34,7 +34,7 @@ export const SelectBox = ({ size = 'small', sx = { width: '49%' }, ...props }: S
         label={props.label}
         onChange={props.onChange}
       >
-        {props.isLoading ? (
+        {props.isLoading || !props.options ? (
           <MenuItem value='1'>読み込み中...</MenuItem>
         ) : (
           props.options.map((option) => (
