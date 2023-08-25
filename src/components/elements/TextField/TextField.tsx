@@ -1,9 +1,9 @@
-import { useState, MouseEvent } from 'react'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import { useState, MouseEvent } from 'react'
 
 export const TextField = ({
   style = { backgroundColor: 'white' },
