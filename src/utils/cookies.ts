@@ -9,13 +9,13 @@ const cookies = {
   get: (ctx?: NextPageContext) => {
     return nookies.get(ctx)
   },
-  set: ({ ctx, name, value }: Arguments & { value: string }) => {
+  set: (name: string, value: string, ctx?: NextPageContext) => {
     nookies.set(ctx, name, value, {
       maxAge: 30 * 24 * 60 * 60,
       path: '/',
     })
   },
-  destroy: ({ ctx, name }: Arguments) => {
+  destroy: (name: string, ctx?: NextPageContext) => {
     nookies.destroy(ctx, name)
   },
 }

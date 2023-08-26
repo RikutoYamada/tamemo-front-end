@@ -6,8 +6,8 @@ import { useState } from 'react'
 
 import { Button } from '@/components/elements/Button'
 import { TextField } from '@/components/elements/TextField/TextField'
-import { RegistrationData } from '@/features/auth/api/register'
 import { useRegister } from '@/features/auth/hooks/useRegister'
+import { NewUser } from '@/features/auth/types'
 import cookies from '@/utils/cookies'
 
 const boxStyles = {
@@ -19,7 +19,7 @@ const boxStyles = {
   gap: '40px',
 }
 
-export async function getServerSideProps(ctx: NextPageContext) {
+export function getServerSideProps(ctx: NextPageContext) {
   const currentUserId = cookies.get(ctx).current_user_id
   if (currentUserId) {
     return {
@@ -35,14 +35,14 @@ export async function getServerSideProps(ctx: NextPageContext) {
   }
 }
 
-const register = () => {
-  const { data, error, isLoading, mutate } = useRegister()
+const Register = () => {
+  const { isLoading, mutate } = useRegister()
 
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>('')
-  const registrationData: RegistrationData = {
+  const newUser: NewUser = {
     name,
     email,
     password,
@@ -88,7 +88,7 @@ const register = () => {
           variant='contained'
           isLoading={isLoading}
           onClick={() => {
-            mutate(registrationData)
+            mutate(newUser)
           }}
           sx={{ width: '100%', height: '56px' }}
         >
@@ -99,4 +99,4 @@ const register = () => {
   )
 }
 
-export default register
+export default Register

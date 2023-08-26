@@ -1,12 +1,8 @@
+import { NewUser } from '@/features/auth/types'
+import { UserResponse } from '@/features/auth/types'
 import { axios } from '@/lib/axios'
 
-export type RegistrationData = {
-  name: string
-  email: string
-  password: string
-  passwordConfirmation: string
-}
-
-export const register = (registrationData: RegistrationData) => {
-  return axios.post('/users', registrationData)
+export const register = async (newUser: NewUser): Promise<UserResponse> => {
+  const response = await axios.post<UserResponse>('/users', newUser)
+  return response.data
 }

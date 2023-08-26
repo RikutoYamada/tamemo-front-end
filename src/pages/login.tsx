@@ -6,8 +6,8 @@ import { useState } from 'react'
 
 import { Button } from '@/components/elements/Button'
 import { TextField } from '@/components/elements/TextField'
-import { LoginCredentials } from '@/features/auth/api/login'
 import { useLogin } from '@/features/auth/hooks/useLogin'
+import { LoginCredentials } from '@/features/auth/types'
 import cookies from '@/utils/cookies'
 
 const boxStyles = {
@@ -19,7 +19,7 @@ const boxStyles = {
   gap: '40px',
 }
 
-export async function getServerSideProps(ctx: NextPageContext) {
+export function getServerSideProps(ctx: NextPageContext) {
   const currentUserId = cookies.get(ctx).current_user_id
   if (currentUserId) {
     return {
@@ -35,8 +35,8 @@ export async function getServerSideProps(ctx: NextPageContext) {
   }
 }
 
-const login = () => {
-  const { data, error, isLoading, mutate } = useLogin()
+const Login = () => {
+  const { isLoading, mutate } = useLogin()
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -81,4 +81,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login
