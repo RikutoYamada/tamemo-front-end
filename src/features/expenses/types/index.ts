@@ -1,4 +1,4 @@
-export type ExpenseForGet = {
+export type ExpenseResponse = {
   id: number
   amount: number
   mainCategory: string
@@ -7,7 +7,7 @@ export type ExpenseForGet = {
   expendedAt: string
 }
 
-export type ExpenseForPost = {
+export type NewExpense= {
   subExpenseCategoryId: string
   amount: number
   detail: string

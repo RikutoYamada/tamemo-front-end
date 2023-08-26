@@ -12,7 +12,7 @@ import { TextField } from '@/components/elements/TextField'
 import { MAIN_EXPENSE_CATEGORIES } from '@/const'
 import { useCreateExpense } from '@/features/expenses/hooks/useCreateExpense'
 import { useGetSubExpenseCategories } from '@/features/expenses/hooks/useGetSubExpenseCategories'
-import { ExpenseForPost, SubExpenseCategory } from '@/features/expenses/types'
+import { NewExpense, SubExpenseCategory } from '@/features/expenses/types'
 
 const handleChangeSelectedCategory = (
   event: SelectChangeEvent,
@@ -33,7 +33,7 @@ export const EasyExpenseRegistration = () => {
   const [subExpenseCategoryId, setSubExpenseCategoryId] = useState('1')
   const [isSubExpenseCategoryIdLoading, setIsSubExpenseCategoryIdLoading] = useState(false)
 
-  const expense: ExpenseForPost = {
+  const newExpense: NewExpense = {
     amount,
     detail,
     expendedAt: expendedAt?.toISOString().slice(0, 10),
@@ -118,7 +118,7 @@ export const EasyExpenseRegistration = () => {
             <Button
               variant='contained'
               onClick={() => {
-                mutate(expense)
+                mutate(newExpense)
               }}
               isLoading={isLoading}
               sx={{ width: '100%' }}
