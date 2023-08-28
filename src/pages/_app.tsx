@@ -15,7 +15,7 @@ const queryClient = new QueryClient()
 const clientSideEmotionCache = createEmotionCache()
 
 type PageProps = {
-  currentUserId: string
+  currentUserId: string | null
 }
 
 export type MyAppProps = Omit<AppProps<PageProps>, 'pageProps'> & {
