@@ -10,10 +10,10 @@ import { NavigationMenu } from '@/components/elements/NavigationMenu'
 import { useLogout } from '@/features/auth/hooks/useLogout'
 
 export type HeaderProps = {
-  currentUserId: string | null
+  isAuthenticated: boolean | null
 }
 
-export const Header = ({ currentUserId }: HeaderProps) => {
+export const Header = ({ isAuthenticated }: HeaderProps) => {
   const { mutate } = useLogout()
 
   return (
@@ -34,7 +34,7 @@ export const Header = ({ currentUserId }: HeaderProps) => {
             </Typography>
           </Link>
         </Box>
-        {currentUserId ? (
+        {isAuthenticated ? (
           <Button onClick={() => mutate()}>ログアウト</Button>
         ) : (
           <Box>

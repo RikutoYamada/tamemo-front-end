@@ -6,11 +6,11 @@ import { EasyExpenseRegistration } from '@/features/expenses/components/EasyExpe
 import { RecentExpenses } from '@/features/expenses/components/RecentExpenses'
 import cookies from '@/utils/cookies'
 
-
 export function getServerSideProps(ctx: NextPageContext) {
-  const currentUserId = cookies.get(ctx).current_user_id
+  const authToken = cookies.get(ctx).token
+  const isAuthenticated = !!authToken
   return {
-    props: { currentUserId: currentUserId || null },
+    props: { isAuthenticated: isAuthenticated || null },
   }
 }
 

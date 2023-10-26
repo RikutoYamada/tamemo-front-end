@@ -15,7 +15,7 @@ const queryClient = new QueryClient()
 const clientSideEmotionCache = createEmotionCache()
 
 type PageProps = {
-  currentUserId: string | null
+  isAuthenticated: boolean | null
 }
 
 export type MyAppProps = Omit<AppProps<PageProps>, 'pageProps'> & {
@@ -29,7 +29,7 @@ const MyApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Header currentUserId={pageProps.currentUserId} />
+          <Header isAuthenticated={pageProps.isAuthenticated} />
           <Component {...pageProps} />
         </ThemeProvider>
       </QueryClientProvider>

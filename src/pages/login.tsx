@@ -20,8 +20,8 @@ const boxStyles = {
 }
 
 export function getServerSideProps(ctx: NextPageContext) {
-  const currentUserId = cookies.get(ctx).current_user_id
-  if (currentUserId) {
+  const authToken = cookies.get(ctx).token
+  if (authToken) {
     return {
       redirect: {
         destination: '/',
