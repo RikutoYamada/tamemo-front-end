@@ -31,7 +31,7 @@ export function getServerSideProps(ctx: NextPageContext) {
   }
 
   return {
-    props: {},
+    props: { isLoginPage: true},
   }
 }
 
@@ -67,6 +67,7 @@ const Login = () => {
           sx={{ width: '100%' }}
         />
         <Button
+          type='submit'
           variant='contained'
           isLoading={isLoading}
           onClick={() => {
