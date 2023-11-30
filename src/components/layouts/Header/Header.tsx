@@ -11,9 +11,10 @@ import { useLogout } from '@/features/auth/hooks/useLogout'
 
 export type HeaderProps = {
   isAuthenticated: boolean | null
+  isLoginPage?: boolean
 }
 
-export const Header = ({ isAuthenticated }: HeaderProps) => {
+export const Header = ({ isAuthenticated, isLoginPage = false }: HeaderProps) => {
   const { mutate } = useLogout()
 
   return (
@@ -34,18 +35,19 @@ export const Header = ({ isAuthenticated }: HeaderProps) => {
             </Typography>
           </Link>
         </Box>
-        {isAuthenticated ? (
-          <Button onClick={() => mutate()}>ログアウト</Button>
-        ) : (
-          <Box>
-            <Link href='/login'>
-              <Button>ログイン</Button>
-            </Link>
-            <Link href='/register'>
-              <Button>会員登録</Button>
-            </Link>
-          </Box>
-        )}
+        {!isLoginPage &&
+          (isAuthenticated ? (
+            <Button onClick={() => mutate()}>ログアウト</Button>
+          ) : (
+            <Box>
+              <Link href='/login'>
+                <Button>ログイン</Button>
+              </Link>
+              <Link href='/register'>
+                <Button>会員登録</Button>
+              </Link>
+            </Box>
+          ))}
       </Toolbar>
     </AppBar>
   )
