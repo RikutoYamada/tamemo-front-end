@@ -36,7 +36,12 @@
           "caseInsensitive": true
         }
       }
-    ]
+    ],
+    "@typescript-eslint/no-misused-promises": [2, {
+      "checksVoidReturn": {
+        "attributes": false
+      }
+    }]
   },
   "root": true
 }
