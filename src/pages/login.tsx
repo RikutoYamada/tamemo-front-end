@@ -4,10 +4,10 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { NextPageContext } from 'next'
 import Image from 'next/image'
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
 
 import { Button } from '@/components/elements/Button'
-import { TextField } from '@/components/elements/TextField'
+import { RHFTextField } from '@/components/elements/TextField/RHFTextField'
 import { useLogin } from '@/features/auth/hooks/useLogin'
 import { LoginCredentials } from '@/features/auth/types'
 import cookies from '@/utils/cookies'
@@ -37,12 +37,12 @@ const Login = () => {
     <Container>
       <Card
         sx={{
-          width: '30%',
+          display: 'flex',
+          flexDirection: 'column',
           margin: 'auto',
           marginY: '100px',
           padding: '25px',
-          display: 'flex',
-          flexDirection: 'column',
+          width: '30%',
         }}
       >
         <Box sx={{ paddingBottom: '20px', margin: 'auto', display: 'flex' }}>
@@ -70,31 +70,21 @@ const Login = () => {
           }}
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Controller
+          <RHFTextField
             name='email'
             control={control}
-            render={({ field: { onChange } }) => (
-              <TextField
-                onChange={onChange}
-                id='email'
-                label='メール'
-                type='email'
-                sx={{ width: '100%' }}
-              />
-            )}
+            id='email'
+            label='メール'
+            type='email'
+            sx={{ width: '100%' }}
           />
-          <Controller
+          <RHFTextField
             name='password'
             control={control}
-            render={({ field: { onChange } }) => (
-              <TextField
-                onChange={onChange}
-                id='password'
-                label='パスワード'
-                type='password'
-                sx={{ width: '100%' }}
-              />
-            )}
+            id='password'
+            label='パスワード'
+            type='password'
+            sx={{ width: '100%' }}
           />
           <Button
             type='submit'
