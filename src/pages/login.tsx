@@ -28,6 +28,23 @@ export function getServerSideProps(ctx: NextPageContext) {
   }
 }
 
+const cardStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  margin: 'auto',
+  marginY: '100px',
+  padding: '25px',
+  width: '30%',
+}
+const boxStyles = { display: 'flex', margin: 'auto', paddingBottom: '20px' }
+const typographyStyles = { color: '#26a69a', fontWeight: 'bold', textAlign: 'center' }
+const formStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  height: '200px',
+  justifyContent: 'space-between',
+}
+
 const Login = () => {
   const { control, handleSubmit } = useForm<LoginCredentials>()
   const { isLoading, mutate } = useLogin()
@@ -35,17 +52,8 @@ const Login = () => {
 
   return (
     <Container>
-      <Card
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          margin: 'auto',
-          marginY: '100px',
-          padding: '25px',
-          width: '30%',
-        }}
-      >
-        <Box sx={{ paddingBottom: '20px', margin: 'auto', display: 'flex' }}>
+      <Card sx={cardStyles}>
+        <Box sx={boxStyles}>
           <Image
             alt='tamemo_logo'
             src='tamemo-primary.svg'
@@ -53,23 +61,11 @@ const Login = () => {
             width={35}
             height={35}
           />
-          <Typography
-            variant='h5'
-            component='h5'
-            sx={{ textAlign: 'center', color: '#26a69a', fontWeight: 'bold' }}
-          >
+          <Typography variant='h5' component='h5' sx={typographyStyles}>
             tamemo
           </Typography>
         </Box>
-        <form
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            height: '200px',
-          }}
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <Box component='form' onSubmit={handleSubmit(onSubmit)} sx={formStyles}>
           <RHFTextField
             name='email'
             control={control}
@@ -94,7 +90,7 @@ const Login = () => {
           >
             ログイン
           </Button>
-        </form>
+        </Box>
       </Card>
     </Container>
   )
