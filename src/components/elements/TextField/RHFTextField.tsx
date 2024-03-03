@@ -11,6 +11,18 @@ export const RHFTextField = <T extends FieldValues>({
   control,
   ...props
 }: RHFControllerProps<T> & CustomMuiTextFieldProps) => {
-  const { field } = useController({ name, control })
-  return <TextField name={field.name} onChange={field.onChange} {...props} />
+  const {
+    field,
+    formState: { errors },
+  } = useController({ name, control })
+  const errorMessage = errors?.[name]?.message as string
+  return (
+    <TextField
+      name={field.name}
+      onChange={field.onChange}
+      helperText={errorMessage}
+      error={errorMessage ? true : false}
+      {...props}
+    />
+  )
 }
