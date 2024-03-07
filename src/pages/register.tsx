@@ -1,27 +1,22 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { NextPageContext } from 'next'
-import { useState } from 'react'
+import Image from 'next/image'
+import { useForm, SubmitHandler } from 'react-hook-form'
 
 import { Button } from '@/components/elements/Button'
-import { TextField } from '@/components/elements/TextField/TextField'
+import { RHFTextField } from '@/components/elements/TextField/RHFTextField'
 import { useRegister } from '@/features/auth/hooks/useRegister'
 import { NewUser } from '@/features/auth/types'
 import cookies from '@/utils/cookies'
-
-const boxStyles = {
-  width: '600px',
-  margin: 'auto',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '40px',
-}
+import { registerValidationSchema } from '@/utils/validationSchema'
 
 export function getServerSideProps(ctx: NextPageContext) {
-  const currentUserId = cookies.get(ctx).current_user_id
-  if (currentUserId) {
+  const authToken = cookies.get(ctx).token
+  if (authToken) {
     return {
       redirect: {
         destination: '/',
@@ -31,70 +26,85 @@ export function getServerSideProps(ctx: NextPageContext) {
   }
 
   return {
-    props: {},
+    props: { isLoginPage: true },
   }
 }
 
-const Register = () => {
-  const { isLoading, mutate } = useRegister()
+const cardStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  margin: 'auto',
+  marginY: '100px',
+  padding: '25px',
+  width: '30%',
+}
+const boxStyles = { display: 'flex', margin: 'auto', paddingBottom: '20px' }
+const typographyStyles = { color: '#26a69a', fontWeight: 'bold', textAlign: 'center' }
+const formStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  height: '293px',
+  justifyContent: 'space-between',
+}
 
-  const [name, setName] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [passwordConfirmation, setPasswordConfirmation] = useState<string>('')
-  const newUser: NewUser = {
-    name,
-    email,
-    password,
-    passwordConfirmation,
-  }
+const Register = () => {
+  const { control, handleSubmit } = useForm<NewUser>({
+    mode: 'onChange',
+    resolver: zodResolver(registerValidationSchema),
+  })
+  const { isLoading, mutate } = useRegister()
+  const onSubmit: SubmitHandler<NewUser> = (data) => mutate(data)
 
   return (
-    <Container sx={{ paddingY: '40px' }}>
-      <Box sx={boxStyles}>
-        <Typography sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 25 }} gutterBottom>
-          会員登録
-        </Typography>
-
-        <TextField
-          id='name'
-          label='お名前'
-          onChange={(e) => setName(e.target.value)}
-          type='text'
-          sx={{ width: '100%' }}
-        />
-        <TextField
-          id='email'
-          label='メール'
-          onChange={(e) => setEmail(e.target.value)}
-          type='email'
-          sx={{ width: '100%' }}
-        />
-        <TextField
-          id='password'
-          label='パスワード'
-          onChange={(e) => setPassword(e.target.value)}
-          type='password'
-          sx={{ width: '100%' }}
-        />
-        <TextField
-          id='password-confirmation'
-          label='パスワード（確認用）'
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-          type='password'
-          sx={{ width: '100%' }}
-        />
-        <Button
-          variant='contained'
-          isLoading={isLoading}
-          onClick={() => {
-            mutate(newUser)
-          }}
-          sx={{ width: '100%', height: '56px' }}
-        >
-          会員登録
-        </Button>
-      </Box>
+    <Container>
+      <Card sx={cardStyles}>
+        <Box sx={boxStyles}>
+          <Image
+            alt='tamemo_logo'
+            height={35}
+            src='tamemo-primary.svg'
+            style={{ marginRight: '10px' }}
+            width={35}
+          />
+          <Typography component='h5' sx={typographyStyles} variant='h5'>
+            tamemo
+          </Typography>
+        </Box>
+        <Box component='form' onSubmit={handleSubmit(onSubmit)} sx={formStyles}>
+          <RHFTextField
+            control={control}
+            id='name'
+            label='ユーザー名'
+            name='name'
+            sx={{ width: '100%' }}
+            type='text'
+          />
+          <RHFTextField
+            control={control}
+            id='email'
+            label='メール'
+            name='email'
+            sx={{ width: '100%' }}
+            type='email'
+          />
+          <RHFTextField
+            control={control}
+            id='password'
+            label='パスワード'
+            name='password'
+            sx={{ width: '100%' }}
+            type='password'
+          />
+          <Button
+            isLoading={isLoading}
+            sx={{ width: '100%', height: '56px' }}
+            type='submit'
+            variant='contained'
+          >
+            会員登録
+          </Button>
+        </Box>
+      </Card>
     </Container>
   )
 }
