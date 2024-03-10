@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { loginValidationSchema } from '@/utils/validationSchema'
+import { loginValidationSchema, registerValidationSchema } from '@/utils/validationSchema'
 
 export type UserResponse = {
   createdAt: string
@@ -11,11 +11,6 @@ export type UserResponse = {
   updatedAt: string
 }
 
-export type NewUser = {
-  name: string
-  email: string
-  password: string
-  passwordConfirmation: string
-}
+export type NewUser = z.infer<typeof registerValidationSchema>
 
 export type LoginCredentials = z.infer<typeof loginValidationSchema>
